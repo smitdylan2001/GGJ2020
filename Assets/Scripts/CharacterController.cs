@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlightController : MonoBehaviour
+public class CharacterController : MonoBehaviour
 {
     private Rigidbody _rb;
-    private     
+    private 
 
     // Start is called before the first frame update
     void Start()
