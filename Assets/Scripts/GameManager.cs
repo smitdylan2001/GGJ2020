@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     {
         _instance = this;
         _gasLevel = 100;
-        Range = 150;
+        Range = 200;
         _hasSaved = false;
         _isOutside = false;
     }
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         float distance = Vector3.Distance(_spaceShipGO.transform.position, _playerGO.transform.position);
-        if (distance < 15)
+        if (distance < 50)
 		{
             GasLevel += 0.1f;
             if (!_hasSaved)
