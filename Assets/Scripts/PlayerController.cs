@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private Rigidbody _rb;
     private Vector2 _moveDirection; 
@@ -11,6 +11,10 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float _moveSensitivity = 200;
     [SerializeField] private float _rotateSensitivity = 800;
     private bool _stabalizeNow;
+    private int _collectedItems;
+    [SerializeField] private GameObject _collideWarning;
+    [SerializeField] private GameObject _returnText;
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +23,7 @@ public class CharacterController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _stabalizeNow = false;
+        _collideWarning.SetActive(false);
     }
 
     // Update is called once per frame
@@ -26,7 +31,6 @@ public class CharacterController : MonoBehaviour
     {
         _rb.AddForce((gameObject.transform.forward * _moveDirection.y + gameObject.transform.right * _moveDirection.x) * Time.deltaTime * _moveSensitivity *100);
         _rb.AddRelativeTorque(new Vector3(-_moveRotation.y, _moveRotation.x, 0)* Time.deltaTime * (_rotateSensitivity /10));
-        Debug.Log(new Vector3(-_moveRotation.y, _moveRotation.x, 0) * Time.deltaTime * (_rotateSensitivity / 10));
     }
 
     void FixedUpdate()
@@ -37,6 +41,7 @@ public class CharacterController : MonoBehaviour
             if (_rb.angularVelocity.magnitude > 0.07f)
 			{
                 _rb.angularVelocity = Vector3.Lerp(_rb.angularVelocity, Vector3.zero, 0.0178f);
+                GameManager.Instance.DecreaseGas(0.05f);
 			}
             else
 			{
@@ -50,6 +55,7 @@ public class CharacterController : MonoBehaviour
 	{
         yield return new WaitForSeconds(2f);
         gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0, 0, 0), 0.01f);
+        GameManager.Instance.DecreaseGas(0.13f);
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -71,8 +77,44 @@ public class CharacterController : MonoBehaviour
 		else
 		{
             _stabalizeNow = false;
-            StopAllCoroutines();
+            //StopAllCoroutines();
 		}
        
     }
+
+	public void ResetPlayer()
+	{
+        _rb.velocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Junk"))
+		{
+            _collideWarning.SetActive(true);
+            StartCoroutine(Warning(_collideWarning));
+		}
+        else if (collision.gameObject.CompareTag("Collectable"))
+        {
+            _collectedItems++;
+            collision.gameObject.SetActive(false);
+            ResetPlayer();
+            if (_collectedItems > 4)
+			{
+                _returnText.SetActive(true);
+                StartCoroutine(Warning(_returnText));
+			}
+        }
+        else if (collision.gameObject.CompareTag("SpaceShip"))
+		{
+            GameManager.Instance.CollectItems(_collectedItems);
+		}
+    }
+
+    IEnumerator Warning(GameObject text)
+	{
+        yield return new WaitForSeconds(4f);
+        text.SetActive(false);
+	}
 }
