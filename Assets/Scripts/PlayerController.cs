@@ -43,11 +43,11 @@ public class PlayerController : MonoBehaviour
                 _rb.angularVelocity = Vector3.Lerp(_rb.angularVelocity, Vector3.zero, 0.0178f);
                 GameManager.Instance.DecreaseGas(0.05f);
 			}
-            else
-			{
-                _rb.angularVelocity = Vector3.zero;
-                StartCoroutine(ResetRotation());
-            }
+   //         else
+			//{
+   //             _rb.angularVelocity = Vector3.zero;
+   //             StartCoroutine(ResetRotation());
+   //         }
         }
 	}
 
@@ -94,9 +94,11 @@ public class PlayerController : MonoBehaviour
 		{
             _collideWarning.SetActive(true);
             StartCoroutine(Warning(_collideWarning));
-		}
+            Debug.Log("junk bonk");
+        }
         else if (collision.gameObject.CompareTag("Collectable"))
         {
+            Debug.Log("collect bonk");
             _collectedItems++;
             collision.gameObject.SetActive(false);
             ResetPlayer();
@@ -108,7 +110,9 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("SpaceShip"))
 		{
+            Debug.Log("Space bonk");
             GameManager.Instance.CollectItems(_collectedItems);
+            _collectedItems = 0;
 		}
     }
 
