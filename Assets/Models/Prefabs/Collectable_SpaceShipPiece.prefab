@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 7490343525694289322}
   - component: {fileID: 5790732284393470479}
   - component: {fileID: 8626688091378699973}
+  - component: {fileID: 2575460602591921152}
   m_Layer: 0
-  m_Name: SpaceShipPiece
+  m_Name: Collectable_SpaceShipPiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7834252812406484752}
-  m_LocalRotation: {x: -0.57154095, y: 0.44438812, z: -0.4281555, w: 0.54087245}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.52152485, y: 0.5215248, z: 1.1629748}
   m_Children: []
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2575460602591921152
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834252812406484752}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6239881831769578202, guid: 4380a0670f01c6240a415a93fbd1d63f, type: 3}

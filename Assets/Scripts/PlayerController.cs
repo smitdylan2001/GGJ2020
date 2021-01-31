@@ -38,17 +38,17 @@ public class PlayerController : MonoBehaviour
         if (_stabalizeNow)
         {
             _rb.velocity = Vector3.Lerp(_rb.velocity, Vector3.zero, 0.04f);
-            if (_rb.angularVelocity.magnitude > 0.07f)
+            if (_rb.angularVelocity.magnitude > 0.02f)
 			{
                 _rb.angularVelocity = Vector3.Lerp(_rb.angularVelocity, Vector3.zero, 0.0178f);
-                GameManager.Instance.DecreaseGas(0.05f);
+                GameManager.Instance.DecreaseGas(0.1f);
 			}
-   //         else
-			//{
-   //             _rb.angularVelocity = Vector3.zero;
-   //             StartCoroutine(ResetRotation());
-   //         }
-        }
+			else
+			{
+				_rb.angularVelocity = Vector3.zero;
+				
+			}
+		}
 	}
 
     private IEnumerator ResetRotation()
