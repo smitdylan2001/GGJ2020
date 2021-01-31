@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private float _oxygenLevel;
     public float Range;
     private int _rangeCount;
+    private float _ogSize;
     private bool _hasSaved;
     private bool _isOutside;
     private PlayerController _characterController;
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
     public int CollectedItems { get; private set; }
     
     [SerializeField] private GameObject _warningText;
+    [SerializeField] private GameObject _gasGO;
     [SerializeField] private GameObject _unlockText;
     [SerializeField] private GameObject _startText;
     [SerializeField] private GameObject _endText;
@@ -47,13 +49,20 @@ public class GameManager : MonoBehaviour
         get { return _gasLevel; } 
         set {
             if (value >= 100) { _gasLevel = 100; 
-                _gasSlider.value = 100f; }
+                _gasSlider.value = 100f;
+                _gasGO.SetActive(true);
+                _gasGO.transform.localScale = new Vector3(_ogSize, _ogSize, _ogSize);
+            }
             else if (value <= 0) { _gasLevel = 0; 
                 _gasSlider.value = 0f;
                 StartCoroutine(Die());
+                _gasGO.SetActive(false);
             }
             else { _gasLevel = value; 
-                _gasSlider.value = value; }
+                _gasGO.SetActive(true);
+                _gasGO.transform.localScale = new Vector3(_ogSize, _ogSize * (value/100), _ogSize);
+                _gasSlider.value = value;
+            }
         }
     }
 
@@ -84,7 +93,8 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
         _startText.SetActive(true);
-        StartCoroutine(NewUnlock(_startText));
+		StartCoroutine(NewUnlock(_startText));
+        _ogSize = _gasGO.transform.localScale.y;
     }
 
 	private void Update()

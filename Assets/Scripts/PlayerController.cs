@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _rotateSensitivity = 800;
     private bool _stabalizeNow;
     private int _collectedItems;
+    private int _collectedItemsDelivered;
     [SerializeField] private GameObject _collideWarning;
     [SerializeField] private GameObject _returnText;
     [SerializeField] private AudioSource _effectSource;
@@ -116,7 +117,12 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.CompareTag("SpaceShip"))
         {
             GameManager.Instance.CollectItems(_collectedItems);
-            _collectedItems = 0;
+            _collectedItemsDelivered += _collectedItems;
+            if (_collectedItemsDelivered >= 4)
+			{
+                _collectedItems = 0;
+                _collectedItemsDelivered = 0;
+			}
             ResetPlayer();
         }
         else if (collision.gameObject.CompareTag("EndCube"))
