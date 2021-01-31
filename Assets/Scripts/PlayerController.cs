@@ -145,16 +145,4 @@ public class PlayerController : MonoBehaviour
     {
         _rotateSensitivity = value;
     }
-    public void SecretKey()
-	{
-        _collectedItems++;
-        ResetPlayer();
-        if (_collectedItems >= 4)
-        {
-            _returnText.SetActive(true);
-            StartCoroutine(Warning(_returnText));
-        }
-        _effectSource.clip = _happy;
-        _effectSource.Play();
-    }
 }

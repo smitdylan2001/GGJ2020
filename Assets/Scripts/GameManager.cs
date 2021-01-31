@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _spaceShipGO;
     [SerializeField] private GameObject _CUBES;
     private float _oxygenLevel;
+    public GameObject[] Texts;
     public float Range;
     private int _rangeCount;
     private float _ogSize;
@@ -150,7 +151,6 @@ public class GameManager : MonoBehaviour
 
     public void DecreaseGas(float amount)
 	{
-        Debug.Log("yep, works");
         GasLevel -= amount;
 	}
 
@@ -169,7 +169,6 @@ public class GameManager : MonoBehaviour
     public void CollectItems(int amount)
 	{
         CollectedItems += amount;
-        Debug.Log(CollectedItems);
         if (CollectedItems >= 4)
 		{
             Range *= 1.5f;
