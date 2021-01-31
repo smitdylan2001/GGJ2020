@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _spaceShipGO;
     private float _oxygenLevel;
     public float Range;
+    private int _rangeCount;
     private bool _hasSaved;
     private bool _isOutside;
     private PlayerController _characterController;
@@ -35,7 +37,11 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private GameObject _warningText;
     [SerializeField] private GameObject _unlockText;
+    [SerializeField] private GameObject _startText;
+    [SerializeField] private GameObject _endText;
     [SerializeField] private GameObject _menuGO;
+    [SerializeField] private AudioClip _happy;
+    [SerializeField] private AudioSource _effectSource;
     private float _gasLevel;
     public float GasLevel { 
         get { return _gasLevel; } 
@@ -58,6 +64,7 @@ public class GameManager : MonoBehaviour
         Range = 200;
         _hasSaved = false;
         _isOutside = false;
+        _rangeCount = 0;
     }
 
 
@@ -76,6 +83,8 @@ public class GameManager : MonoBehaviour
         LineRenderer.startWidth = 10;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
+        _startText.SetActive(true);
+        StartCoroutine(NewUnlock(_startText));
     }
 
 	private void Update()
@@ -146,12 +155,21 @@ public class GameManager : MonoBehaviour
 		{
             Range *= 1.5f;
             CollectedItems = 0;
-            
+            _rangeCount++;
             _unlockText.SetActive(true);
             StartCoroutine(NewUnlock(_unlockText));
             int rnd = (int)Random.Range(0, _cameraList.Count);
-            _cameraList[rnd].gameObject.SetActive(false);
-            _cameraList.Remove(_cameraList[rnd]);
+            _cameraList.ElementAt(rnd).gameObject.SetActive(false);
+            _cameraList.RemoveAt(rnd);
+
+            if (_rangeCount >= 3)
+			{
+                _endText.SetActive(true);
+                StartCoroutine(NewUnlock(_endText));
+			}
+
+            _effectSource.clip = _happy;
+            _effectSource.Play();
         }
 	}
 

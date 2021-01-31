@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private int _collectedItems;
     [SerializeField] private GameObject _collideWarning;
     [SerializeField] private GameObject _returnText;
+    [SerializeField] private AudioSource _effectSource;
+    [SerializeField] private AudioClip _happy;
+    [SerializeField] private AudioClip _bonk;
 
 
     // Start is called before the first frame update
@@ -94,29 +97,30 @@ public class PlayerController : MonoBehaviour
 		{
             _collideWarning.SetActive(true);
             StartCoroutine(Warning(_collideWarning));
-            Debug.Log("junk bonk");
+            _effectSource.clip = _bonk;
+            _effectSource.Play();
         }
         else if (collision.gameObject.CompareTag("Collectable"))
         {
-            Debug.Log("collect bonk");
             _collectedItems++;
             collision.gameObject.SetActive(false);
             ResetPlayer();
-            if (_collectedItems > 4)
+            if (_collectedItems >= 4)
 			{
                 _returnText.SetActive(true);
                 StartCoroutine(Warning(_returnText));
 			}
+            _effectSource.clip = _happy;
+            _effectSource.Play();
         }
         else if (collision.gameObject.CompareTag("SpaceShip"))
         {
-            Debug.Log("Space bonk");
             GameManager.Instance.CollectItems(_collectedItems);
             _collectedItems = 0;
+            ResetPlayer();
         }
         else if (collision.gameObject.CompareTag("EndCube"))
         {
-            Debug.Log("Done");
             GameManager.Instance.LoadEnd();
         }
     }
