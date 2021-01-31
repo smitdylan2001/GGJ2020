@@ -23,10 +23,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject _playerGO;
     [SerializeField] private GameObject _spaceShipGO;
+    [SerializeField] private GameObject _CUBES;
     private float _oxygenLevel;
     public float Range;
     private int _rangeCount;
     private float _ogSize;
+    private float _gasMultiply;
     private bool _hasSaved;
     private bool _isOutside;
     private PlayerController _characterController;
@@ -40,7 +42,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _gasGO;
     [SerializeField] private GameObject _unlockText;
     [SerializeField] private GameObject _startText;
+    [SerializeField] private GameObject _gasText;
     [SerializeField] private GameObject _endText;
+    [SerializeField] private GameObject _tooLongText;
     [SerializeField] private GameObject _menuGO;
     [SerializeField] private AudioClip _happy;
     [SerializeField] private AudioSource _effectSource;
@@ -48,6 +52,8 @@ public class GameManager : MonoBehaviour
     public float GasLevel { 
         get { return _gasLevel; } 
         set {
+            if (value < 15) _gasText.SetActive(true);
+            else _gasText.SetActive(false);
             if (value >= 100) { _gasLevel = 100; 
                 _gasSlider.value = 100f;
                 _gasGO.SetActive(true);
@@ -95,6 +101,9 @@ public class GameManager : MonoBehaviour
         _startText.SetActive(true);
 		StartCoroutine(NewUnlock(_startText));
         _ogSize = _gasGO.transform.localScale.y;
+        _CUBES.SetActive(false);
+        _gasText.SetActive(false);
+        _gasMultiply = 1;
     }
 
 	private void Update()
@@ -109,7 +118,7 @@ public class GameManager : MonoBehaviour
         float distance = Vector3.Distance(_spaceShipGO.transform.position, _playerGO.transform.position);
         if (distance < 50)
 		{
-            GasLevel += 0.1f;
+            GasLevel += 0.1f * _gasMultiply;
             if (!_hasSaved)
             {
                 SaveSystem.SavePlayer(this);
@@ -119,14 +128,14 @@ public class GameManager : MonoBehaviour
 		}
 		else if (distance < Range)
 		{
-            GasLevel -= 0.01f;
+            GasLevel -= 0.01f * _gasMultiply;
             _hasSaved = false;
             _isOutside = false;
         }
         else
 		{
             _warningText.SetActive(true);
-            GasLevel -= 0.1f;
+            GasLevel -= 0.1f * _gasMultiply;
             _isOutside = true;
             return;
 		}
@@ -153,7 +162,7 @@ public class GameManager : MonoBehaviour
             SaveSystem.loadPlayer();
             _playerGO.transform.position = _startPos;
             _characterController.ResetPlayer();
-            
+            GasLevel = 100;
         }
 	}
 
@@ -164,10 +173,10 @@ public class GameManager : MonoBehaviour
         if (CollectedItems >= 4)
 		{
             Range *= 1.5f;
+            _gasMultiply /= 1.3f;
             CollectedItems = 0;
             _rangeCount++;
-            _unlockText.SetActive(true);
-            StartCoroutine(NewUnlock(_unlockText));
+            
             int rnd = (int)Random.Range(0, _cameraList.Count);
             _cameraList.ElementAt(rnd).gameObject.SetActive(false);
             _cameraList.RemoveAt(rnd);
@@ -176,13 +185,24 @@ public class GameManager : MonoBehaviour
 			{
                 _endText.SetActive(true);
                 StartCoroutine(NewUnlock(_endText));
+                _CUBES.SetActive(true);
+                StartCoroutine(TooLong());
 			}
+			else
+			{
+                _unlockText.SetActive(true);
+                StartCoroutine(NewUnlock(_unlockText));
+            }
 
             _effectSource.clip = _happy;
             _effectSource.Play();
         }
 	}
-
+    IEnumerator TooLong()
+	{
+        yield return new WaitForSeconds(180f);
+        _tooLongText.SetActive(true);
+	}
     IEnumerator NewUnlock(GameObject text)
 	{
         yield return new WaitForSeconds(10f);

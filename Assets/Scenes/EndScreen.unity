@@ -3526,17 +3526,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5582359986157083380, guid: 953ae716f37595a4b9e0a144e589c220, type: 3}
   m_PrefabInstance: {fileID: 679040501}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &683376733 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9010566586632993880, guid: 744748b479c81be4985b21ac6ef58960, type: 3}
-  m_PrefabInstance: {fileID: 9010566587047541765}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbc00e51435839e47b902791c65a61ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &683731569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5582359986157083380, guid: 953ae716f37595a4b9e0a144e589c220, type: 3}
@@ -5394,7 +5383,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 683376733}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: CloseMenu
         m_Mode: 1
@@ -5976,7 +5965,7 @@ PrefabInstance:
     - target: {fileID: 1580025145648451410, guid: 7acef8eba74eb1a4385c522e0ac3b861, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 683376733}
+      objectReference: {fileID: 0}
     - target: {fileID: 1580025145648451410, guid: 7acef8eba74eb1a4385c522e0ac3b861, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenMenu
@@ -7966,7 +7955,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 683376733}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: Exit
         m_Mode: 1
@@ -12366,5 +12355,7 @@ PrefabInstance:
       propertyPath: _spaceShipGO
       value: 
       objectReference: {fileID: 564172351}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9010566588533514112, guid: 744748b479c81be4985b21ac6ef58960, type: 3}
+    - {fileID: 9010566586632993880, guid: 744748b479c81be4985b21ac6ef58960, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 744748b479c81be4985b21ac6ef58960, type: 3}
