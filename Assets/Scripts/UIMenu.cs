@@ -11,6 +11,10 @@ public class UIMenu : MonoBehaviour
 	{
 		SceneManager.LoadScene(1);
 	}
+	public void ExitButton()
+	{
+		Application.Quit();
+	}
 	private void Start()
 	{
 		Cursor.lockState = CursorLockMode.None;
