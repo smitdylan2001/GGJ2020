@@ -53,7 +53,7 @@ public class Indicator : MonoBehaviour
     /// <param name="value"></param>
     public void SetDistanceText(float value)
     {
-        distanceText.text = value >= 0 ? Mathf.Floor(value) + " m" : "";
+       // distanceText.text = value >= 0 ? Mathf.Floor(value) + " m" : "";
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class Indicator : MonoBehaviour
     /// <param name="rotation"></param>
     public void SetTextRotation(Quaternion rotation)
     {
-        distanceText.rectTransform.rotation = rotation;
+       // distanceText.rectTransform.rotation = rotation;
     }
 
     /// <summary>
