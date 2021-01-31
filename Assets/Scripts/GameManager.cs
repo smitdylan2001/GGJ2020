@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private GameObject _warningText;
     [SerializeField] private GameObject _unlockText;
+    [SerializeField] private GameObject _menuGO;
     private float _gasLevel;
     public float GasLevel { 
         get { return _gasLevel; } 
@@ -72,6 +74,8 @@ public class GameManager : MonoBehaviour
 
         LineRenderer.endWidth = 10;
         LineRenderer.startWidth = 10;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
     }
 
 	private void Update()
@@ -155,5 +159,27 @@ public class GameManager : MonoBehaviour
 	{
         yield return new WaitForSeconds(10f);
         text.SetActive(false);
+	}
+    public void Exit()
+    {
+        SceneManager.LoadSceneAsync(0);
+    }
+    public void OpenMenu()
+    {
+        _menuGO.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    public void CloseMenu()
+    {
+        _menuGO.SetActive(false);
+        
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+    }
+    public void LoadEnd()
+	{
+        SceneManager.LoadSceneAsync(2);
 	}
 }

@@ -8,6 +8,7 @@ TagManager:
   - Collectable
   - SpaceShip
   - SideCamera
+  - EndCube
   layers:
   - Default
   - TransparentFX

@@ -109,11 +109,16 @@ public class PlayerController : MonoBehaviour
 			}
         }
         else if (collision.gameObject.CompareTag("SpaceShip"))
-		{
+        {
             Debug.Log("Space bonk");
             GameManager.Instance.CollectItems(_collectedItems);
             _collectedItems = 0;
-		}
+        }
+        else if (collision.gameObject.CompareTag("EndCube"))
+        {
+            Debug.Log("Done");
+            GameManager.Instance.LoadEnd();
+        }
     }
 
     IEnumerator Warning(GameObject text)
@@ -121,4 +126,14 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(4f);
         text.SetActive(false);
 	}
+
+    public void ChangeMove(float value)
+    {
+        _moveSensitivity = value;
+    }
+    public void ChangeRotate(float value)
+    {
+        _rotateSensitivity = value;
+    }
+    
 }

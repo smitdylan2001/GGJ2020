@@ -11,6 +11,11 @@ public class UIMenu : MonoBehaviour
 	{
 		SceneManager.LoadScene(1);
 	}
+	private void Start()
+	{
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+	}
 
 	private void Update()
 	{
