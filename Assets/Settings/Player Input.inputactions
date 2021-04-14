@@ -96,6 +96,17 @@
                 },
                 {
                     "name": "",
+                    "id": "2e95a7f4-3597-41d4-ac21-aa7dc9e78df8",
+                    "path": "<XRController>{LeftHand}/thumbstick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f4c84683-24c6-4c2f-a8bc-8144ef4f1846",
                     "path": "<Mouse>/delta",
                     "interactions": "",
@@ -107,8 +118,30 @@
                 },
                 {
                     "name": "",
+                    "id": "8131926c-6fc8-4c87-b5d9-f53472a312c3",
+                    "path": "<XRController>{RightHand}/thumbstick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f6862e9f-f748-4eee-85f1-fc257199ff85",
                     "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Stabalize",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be6e2c7b-c27e-4463-9e77-72492ca663b8",
+                    "path": "<XRController>{RightHand}/primary",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
